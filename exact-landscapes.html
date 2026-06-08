@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exact Landscapes — Lehi, UT Landscaping</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-deep:   #1b3a20;
+    --green-mid:    #2b6035;
+    --green-bright: #3d8f4a;
+    --green-light:  #bdd8bf;
+    --cream:        #f5f2ec;
+    --cream-warm:   #ede8df;
+    --cream-dark:   #ddd7cc;
+    --gold:         #b07c2e;
+    --gold-light:   #e6d09e;
+    --white:        #ffffff;
+    --text-dark:    #1a2020;
+    --text-mid:     #364440;
+    --text-light:   #627060;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans:  'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(27, 58, 32, 0.97);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo { font-family: var(--serif); font-size: 1.3rem; color: var(--gold-light); letter-spacing: 0.02em; }
+  .nav-logo span { color: var(--green-light); font-style: italic; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.875rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  .nav-cta {
+    background: var(--gold); color: var(--green-deep) !important;
+    padding: 0.55rem 1.4rem; border-radius: 2px;
+    font-weight: 600 !important; transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--green-deep);
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 65% 45%, rgba(61,143,74,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 12% 80%, rgba(176,124,46,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-texture {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg, transparent, transparent 80px,
+      rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px
+    );
+    pointer-events: none;
+  }
+
+  .hero-left { padding: 8rem 3rem 6rem 5rem; position: relative; z-index: 2; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+
+  /* Perfect score badge */
+  .perfect-badge {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: rgba(176,124,46,0.18); border: 1px solid rgba(176,124,46,0.4);
+    border-radius: 2px; padding: 0.45rem 0.9rem;
+    margin-bottom: 1.75rem;
+  }
+  .perfect-badge .stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 1px; }
+  .perfect-badge .label { font-size: 0.75rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.06em; }
+
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.9rem, 5vw, 4.5rem); line-height: 1.05; color: var(--white); margin-bottom: 1.5rem; }
+  .hero h1 em { color: var(--green-light); font-style: italic; }
+
+  .hero-sub { font-size: 1.05rem; line-height: 1.75; color: rgba(255,255,255,0.6); max-width: 430px; margin-bottom: 2.5rem; }
+
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-block; background: var(--gold); color: var(--green-deep);
+    padding: 1rem 2rem; font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; border-radius: 2px; letter-spacing: 0.03em;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.65); font-size: 0.9rem; text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.6); }
+
+  /* hero right photo */
+  .hero-right { position: relative; height: 100vh; overflow: hidden; }
+
+  .hero-photo {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+  }
+  .hero-photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--green-deep) 0%, rgba(27,58,32,0.2) 45%, transparent 100%);
+  }
+  .hero-photo-caption {
+    position: absolute; bottom: 3rem; right: 2rem;
+    background: rgba(27,58,32,0.9); backdrop-filter: blur(6px);
+    border-left: 3px solid var(--gold); padding: 1rem 1.4rem;
+  }
+  .caption-title { font-size: 0.8rem; font-weight: 600; color: var(--white); letter-spacing: 0.05em; text-transform: uppercase; }
+  .caption-sub { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-top: 0.15rem; }
+
+  .hero-stats { position: absolute; bottom: 3rem; left: 5rem; display: flex; gap: 3rem; z-index: 2; }
+  .stat-num { font-family: var(--serif); font-size: 2.2rem; color: var(--white); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--gold); padding: 1rem 5rem;
+    display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--green-deep); letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green-deep); opacity: 0.35; }
+
+  /* ── SHARED SECTION ── */
+  .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright); margin-bottom: 0.75rem; }
+  .section-title { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.1; color: var(--green-deep); max-width: 520px; margin-bottom: 1rem; }
+  .section-sub { color: var(--text-light); font-size: 1.05rem; line-height: 1.7; max-width: 500px; margin-bottom: 3.5rem; }
+
+  /* ── SERVICES ── */
+  .services { padding: 7rem 5rem; background: var(--cream); }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px; background: var(--cream-dark); border: 1.5px solid var(--cream-dark);
+  }
+
+  .service-card {
+    background: var(--white); padding: 2.5rem 2rem;
+    cursor: default; transition: background 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 3px; background: var(--green-bright);
+    transition: width 0.35s ease;
+  }
+  .service-card:hover { background: var(--cream); }
+  .service-card:hover::after { width: 100%; }
+
+  .service-icon {
+    width: 48px; height: 48px; background: var(--green-deep); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem; font-size: 1.3rem;
+  }
+
+  .service-card h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--green-deep); margin-bottom: 0.75rem; }
+  .service-card p { font-size: 0.9rem; line-height: 1.65; color: var(--text-light); }
+
+  /* quote pull */
+  .service-quote {
+    margin-top: 1rem; padding-top: 1rem;
+    border-top: 1px solid var(--cream-dark);
+    font-size: 0.78rem; font-style: italic; color: var(--green-mid);
+    line-height: 1.5;
+  }
+
+  /* ── IMAGE BREAK ── */
+  .img-break { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; }
+
+  .img-panel { position: relative; overflow: hidden; }
+  .img-panel-photo {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.6s ease;
+  }
+  .img-panel:hover .img-panel-photo { transform: scale(1.04); }
+  .img-panel-overlay { position: absolute; inset: 0; background: rgba(27,58,32,0.4); }
+
+  .img-panel-label {
+    position: absolute; bottom: 2.5rem; left: 2.5rem;
+  }
+  .img-season-tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.4rem; display: block; }
+  .img-panel-title { font-family: var(--serif); font-size: 2rem; color: var(--white); text-shadow: 0 2px 12px rgba(0,0,0,0.4); line-height: 1.15; font-style: italic; }
+
+  /* ── WHY US ── */
+  .why {
+    background: var(--green-deep); padding: 7rem 5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .why-left .section-title { color: var(--white); max-width: 420px; }
+  .why-left .section-sub { color: rgba(255,255,255,0.5); }
+  .why-left .section-label { color: var(--gold); }
+
+  .promise-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem; }
+  .promise-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .promise-num { font-family: var(--serif); font-size: 1.1rem; color: var(--gold); min-width: 28px; line-height: 1.3; }
+  .promise-item h4 { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.25rem; }
+  .promise-item p { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+  .why-right { display: flex; flex-direction: column; gap: 1rem; }
+
+  .highlight-box {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 4px; padding: 1.75rem 2rem;
+  }
+  .highlight-box.accent { background: var(--green-mid); border-color: rgba(61,143,74,0.4); }
+
+  .highlight-num { font-family: var(--serif); font-size: 3rem; color: var(--gold-light); line-height: 1; margin-bottom: 0.3rem; }
+  .highlight-box h4 { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+  .highlight-box p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+  /* ── REVIEWS ── */
+  .reviews { padding: 7rem 5rem; background: var(--cream); }
+
+  .reviews-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem;
+  }
+  .stars-display { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+  .star { color: var(--gold); font-size: 1.1rem; }
+  .rating-big { font-family: var(--serif); font-size: 3.5rem; color: var(--green-deep); line-height: 1; }
+  .rating-context { font-size: 0.82rem; color: var(--text-light); margin-top: 0.25rem; }
+
+  .reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+  .review-card {
+    background: var(--white); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 2rem;
+    transition: box-shadow 0.25s, transform 0.25s;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .review-card:hover { box-shadow: 0 6px 32px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .review-card.featured { background: var(--green-deep); border-color: var(--green-deep); }
+
+  .review-quote { font-family: var(--serif); font-size: 3rem; color: var(--green-light); line-height: 0.5; margin-bottom: 1rem; display: block; }
+  .review-card.featured .review-quote { color: rgba(61,143,74,0.35); }
+
+  .review-text { font-size: 0.92rem; line-height: 1.72; color: var(--text-mid); margin-bottom: 1.25rem; flex: 1; }
+  .review-card.featured .review-text { color: rgba(255,255,255,0.78); }
+
+  /* service tags on review */
+  .review-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .review-tag {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.22rem 0.6rem; border-radius: 2px;
+    background: var(--green-light); color: var(--green-deep);
+  }
+  .review-card.featured .review-tag { background: rgba(189,216,191,0.15); color: var(--green-light); }
+
+  .review-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--cream-dark); }
+  .review-card.featured .review-footer { border-top-color: rgba(255,255,255,0.1); }
+
+  .reviewer { display: flex; align-items: center; gap: 0.75rem; }
+  .reviewer-avatar {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--green-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 600; color: var(--white); flex-shrink: 0;
+  }
+  .review-card.featured .reviewer-avatar { background: rgba(255,255,255,0.12); }
+
+  .reviewer-name { font-size: 0.875rem; font-weight: 600; color: var(--text-dark); }
+  .review-card.featured .reviewer-name { color: var(--white); }
+  .reviewer-meta { font-size: 0.73rem; color: var(--text-light); }
+  .review-card.featured .reviewer-meta { color: rgba(255,255,255,0.4); }
+  .review-stars span { color: var(--gold); font-size: 0.85rem; }
+
+  .google-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.72rem; font-weight: 600; color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    border: 1px solid var(--cream-dark); padding: 0.4rem 0.8rem; border-radius: 2px; align-self: center;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--cream-warm); padding: 7rem 5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+  }
+
+  .contact-details { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+  .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .contact-icon { width: 36px; height: 36px; background: var(--green-deep); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .contact-item-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 0.15rem; }
+  .contact-item-value { font-size: 0.95rem; color: var(--text-dark); font-weight: 500; }
+  .contact-item-value a { color: inherit; text-decoration: none; }
+  .contact-item-value a:hover { color: var(--green-bright); }
+
+  .contact-form { background: var(--white); padding: 2.5rem; border: 1px solid var(--cream-dark); border-radius: 4px; }
+  .form-title { font-family: var(--serif); font-size: 1.5rem; color: var(--green-deep); margin-bottom: 0.4rem; }
+  .form-sub { font-size: 0.85rem; color: var(--text-light); margin-bottom: 2rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+  .form-group label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-light); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.7rem 0.9rem; border: 1.5px solid var(--cream-dark); border-radius: 2px;
+    font-family: var(--sans); font-size: 0.9rem; color: var(--text-dark); background: var(--cream);
+    outline: none; transition: border-color 0.2s; appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--green-bright); background: var(--white); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    width: 100%; padding: 1rem; background: var(--green-deep); color: var(--white);
+    border: none; font-family: var(--sans); font-size: 0.95rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase; border-radius: 2px;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .form-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
+  .form-submit:active { transform: translateY(0); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0e1e10; padding: 3rem 5rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: var(--serif); font-size: 1.1rem; color: var(--gold-light); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+  /* ── FLOAT CTA ── */
+  .float-cta {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+    background: var(--gold); color: var(--green-deep);
+    padding: 0.9rem 1.6rem; border-radius: 2px;
+    font-weight: 700; font-size: 0.875rem; text-decoration: none; letter-spacing: 0.04em;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.22); transition: all 0.2s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .float-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.28); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * { animation: fadeUp 0.7s ease both; }
+  .hero-left > :nth-child(1) { animation-delay: 0.05s; }
+  .hero-left > :nth-child(2) { animation-delay: 0.18s; }
+  .hero-left > :nth-child(3) { animation-delay: 0.32s; }
+  .hero-left > :nth-child(4) { animation-delay: 0.46s; }
+  .hero-left > :nth-child(5) { animation-delay: 0.60s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 7rem 1.5rem 4rem; }
+    .hero-stats { left: 1.5rem; bottom: 2rem; gap: 2rem; }
+    .trust-bar { padding: 1rem 1.5rem; gap: 1.5rem; }
+    .services { padding: 4rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .img-break { grid-template-columns: 1fr; min-height: auto; }
+    .img-panel { min-height: 260px; }
+    .why { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+    .reviews { padding: 4rem 1.5rem; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#contact" class="float-cta">📞 Free Estimate</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Exact <span>Landscapes</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Get Estimate</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-left">
+    <p class="hero-tag">Lehi & Eagle Mountain, Utah</p>
+
+    <div class="perfect-badge">
+      <span class="stars">★★★★★</span>
+      <span class="label">5.0 Perfect Score · 5 Reviews</span>
+    </div>
+
+    <h1>Done <em>exactly</em><br>how you<br>want it.</h1>
+    <p class="hero-sub">Exact Landscapes delivers sod, sprinklers, concrete curbing, garden beds, topsoil, and full yard cleanups — on time, on budget, and exactly as promised.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get Your Free Estimate →</a>
+      <a href="tel:+18016904018" class="btn-ghost">☎ (801) 690-4018</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo" id="heroPhoto"></div>
+    <div class="hero-photo-overlay"></div>
+    <div class="hero-photo-caption">
+      <div class="caption-title">Sod, Sprinklers & Concrete Curbing</div>
+      <div class="caption-sub">Lehi &amp; Eagle Mountain, Utah</div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">5.0★</div>
+      <div class="stat-label">Perfect Rating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">On Time</div>
+      <div class="stat-label">Every Project</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Fair</div>
+      <div class="stat-label">Pricing, Always</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">★ 5.0 Perfect Score</div>
+  <div class="trust-dot"></div>
+  <div class="trust-item">✓ On Time, Every Time</div>
+  <div class="trust-dot"></div>
+  <div class="trust-item">✓ Lehi &amp; Eagle Mountain</div>
+  <div class="trust-dot"></div>
+  <div class="trust-item">✓ Great Price</div>
+  <div class="trust-dot"></div>
+  <div class="trust-item">✓ Start-to-Finish Communication</div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <p class="section-label">What We Do</p>
+  <h2 class="section-title">Every service your yard needs.</h2>
+  <p class="section-sub">Spencer and the Exact Landscapes team handle the full scope — from sprinkler installs to sod to concrete curbing and cleanup. One crew, one call, done right.</p>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">💧</div>
+      <h3>Sprinkler System Installation</h3>
+      <p>Full design and installation of residential irrigation systems. Every zone mapped and tested so your lawn gets exactly the water it needs — no dry spots, no waste.</p>
+      <div class="service-quote">"The sprinkler system works perfectly." — Nathan O.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🌱</div>
+      <h3>Sod Installation</h3>
+      <p>Proper ground prep, grading, and sod laying for a lush, even lawn. We leave your yard looking green, level, and ready to grow — whether it's a new build or a full redo.</p>
+      <div class="service-quote">"They laid down beautiful new sod." — Raquel C.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🪨</div>
+      <h3>Concrete Curbing</h3>
+      <p>Decorative concrete curbing around garden beds and borders. Clean, professional edging that frames your landscape and keeps everything looking intentional and sharp.</p>
+      <div class="service-quote">"Concrete curbing around my garden beds — done professionally." — Nathan O.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🌿</div>
+      <h3>Garden Beds &amp; Planting</h3>
+      <p>Installation and prep of garden beds, including plant selection, edging, and proper soil work so your plants have the best possible start.</p>
+      <div class="service-quote">"Garden beds, plants — everything turned out like we wanted." — Michael M.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">⛏️</div>
+      <h3>Topsoil</h3>
+      <p>Fresh topsoil delivery and spreading for new lawns, raised beds, and grading work. We bring in clean, quality soil and grade it right for drainage and growth.</p>
+      <div class="service-quote">"New topsoil, new sod and tree planting — couldn't be happier." — Michael H.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <h3>Full Yard Cleanup</h3>
+      <p>Complete property cleanups including weed removal, debris hauling, leaf clearing, and prep for new installs. We leave the space looking brand new — even if it's been neglected for years.</p>
+      <div class="service-quote">"A massive cleanup — weeds, leaves, old debris. Left it looking brand new." — Raquel C.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="img-break">
+  <div class="img-panel">
+    <div class="img-panel-photo" id="photo1"></div>
+    <div class="img-panel-overlay"></div>
+    <div class="img-panel-label">
+      <span class="img-season-tag">Sod &amp; Lawn Installation</span>
+      <div class="img-panel-title">Fresh Sod.<br>Done Right.</div>
+    </div>
+  </div>
+  <div class="img-panel">
+    <div class="img-panel-photo" id="photo2"></div>
+    <div class="img-panel-overlay"></div>
+    <div class="img-panel-label">
+      <span class="img-season-tag">Concrete Curbing &amp; Garden Beds</span>
+      <div class="img-panel-title">Clean Edges.<br>Every Time.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-left">
+    <p class="section-label">Why Exact Landscapes</p>
+    <h2 class="section-title">They do exactly what they say they'll do.</h2>
+    <p class="section-sub">Every review says the same thing: Spencer and his team show up, communicate, finish on time, and deliver exactly what was quoted. That's not common — it's exactly what sets us apart.</p>
+
+    <div class="promise-list">
+      <div class="promise-item">
+        <div class="promise-num">01</div>
+        <div>
+          <h4>On Time. Every Time.</h4>
+          <p>Projects are completed in the timeframe quoted — not weeks later. No waiting, no chasing, no excuses.</p>
+        </div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-num">02</div>
+        <div>
+          <h4>Communication Start to Finish</h4>
+          <p>Spencer keeps you in the loop throughout the project. You always know what's happening and what's next.</p>
+        </div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-num">03</div>
+        <div>
+          <h4>Great Pricing</h4>
+          <p>Reasonable, transparent estimates. Multiple customers independently call the pricing great or very fair.</p>
+        </div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-num">04</div>
+        <div>
+          <h4>They Go the Extra Mile</h4>
+          <p>A leaning tree? Re-staked at no charge. A neglected yard? Fully cleaned before new sod goes down. They notice and they act.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-right">
+    <div class="highlight-box accent">
+      <div class="highlight-num">5.0★</div>
+      <h4>Perfect Google Score · 5 Reviews</h4>
+      <p>Every single customer gives 5 stars. Consistent praise for communication, quality, pricing, and on-time delivery across Lehi and Eagle Mountain.</p>
+    </div>
+    <div class="highlight-box">
+      <div class="highlight-num">100%</div>
+      <h4>5-Star Reviews</h4>
+      <p>Not one customer has had a bad experience. When Spencer's team says they'll do it — they do it, exactly as promised.</p>
+    </div>
+    <div class="highlight-box">
+      <div style="font-size: 1.8rem; margin-bottom: 0.5rem;">📍</div>
+      <h4>Lehi &amp; Eagle Mountain, UT</h4>
+      <p>Based at 166 E 1275 N, Lehi. Serving Lehi, Eagle Mountain, and surrounding Utah County communities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-header">
+    <div>
+      <p class="section-label">Customer Reviews</p>
+      <h2 class="section-title" style="margin-bottom:0.5rem;">What our customers say</h2>
+      <div class="stars-display">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        <span style="font-size:0.85rem; color:var(--text-light); margin-left:0.3rem;">5.0 — Perfect Score on Google</span>
+      </div>
+      <p class="rating-context">5 Verified Google Reviews · Lehi &amp; Eagle Mountain, UT</p>
+    </div>
+    <div class="google-badge"><span style="font-size:1rem;">G</span> Google Reviews</div>
+  </div>
+
+  <div class="reviews-grid">
+
+    <div class="review-card featured">
+      <span class="review-quote">"</span>
+      <div class="review-tags">
+        <span class="review-tag">Sprinklers</span>
+        <span class="review-tag">Concrete Curbing</span>
+        <span class="review-tag">Garden Beds</span>
+      </div>
+      <p class="review-text">Exact Landscaping did a great job on our sprinkler install and concrete curbing around my garden beds. Everything was done professionally, on time, and the quality of work shows. The sprinkler system works perfectly.</p>
+      <div class="review-footer">
+        <div class="reviewer">
+          <div class="reviewer-avatar">NO</div>
+          <div>
+            <div class="reviewer-name">Nathan Olson</div>
+            <div class="reviewer-meta">Local Guide · 38 reviews · 3 months ago</div>
+          </div>
+        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <span class="review-quote">"</span>
+      <div class="review-tags">
+        <span class="review-tag">Sprinklers</span>
+        <span class="review-tag">Sod</span>
+        <span class="review-tag">Topsoil</span>
+        <span class="review-tag">Garden Beds</span>
+      </div>
+      <p class="review-text">Spencer worked on our yard in Eagle Mountain. He did our sprinklers, garden beds, plants, topsoil and sod. Everything turned out like we wanted. Communication was awesome from start to finish. Thanks again Spencer.</p>
+      <div class="review-footer">
+        <div class="reviewer">
+          <div class="reviewer-avatar" style="background:var(--green-bright);">MM</div>
+          <div>
+            <div class="reviewer-name">Michael Mcarthur</div>
+            <div class="reviewer-meta">4 reviews · 1 photo · Great price</div>
+          </div>
+        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <span class="review-quote">"</span>
+      <div class="review-tags">
+        <span class="review-tag">Topsoil</span>
+        <span class="review-tag">Sod</span>
+        <span class="review-tag">Tree Planting</span>
+      </div>
+      <p class="review-text">Exact Landscapers did EXACTLY what they said they were going to do. They finished in exactly the timeframe they quoted. Pricing was very reasonable and they communicated throughout the entire process. They even re-staked a leaning tree at no cost.</p>
+      <div class="review-footer">
+        <div class="reviewer">
+          <div class="reviewer-avatar" style="background:var(--gold);">MH</div>
+          <div>
+            <div class="reviewer-name">Michael Holzrichter</div>
+            <div class="reviewer-meta">6 reviews · Reasonable price</div>
+          </div>
+        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <span class="review-quote">"</span>
+      <div class="review-tags">
+        <span class="review-tag">Sod</span>
+        <span class="review-tag">Full Cleanup</span>
+        <span class="review-tag">Weed Removal</span>
+      </div>
+      <p class="review-text">I can't recommend this team enough! The yard had been completely neglected — weeds, leaves, animal waste. They did a massive cleanup of the entire area, cleared weeds from the concrete, then laid beautiful new sod. Professional, thorough, on time. Left it looking brand new.</p>
+      <div class="review-footer">
+        <div class="reviewer">
+          <div class="reviewer-avatar" style="background:#7a5c3a;">RC</div>
+          <div>
+            <div class="reviewer-name">Raquel Cristina</div>
+            <div class="reviewer-meta">5 reviews · 1 photo · Great price</div>
+          </div>
+        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Ready for a yard that turns out exactly right?</h2>
+    <p class="section-sub">Get a free, no-obligation estimate. Spencer's team will give you a straight answer, a fair price, and a clear timeline — and then deliver on every one of them.</p>
+
+    <div class="contact-details">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-value"><a href="tel:+18016904018">(801) 690-4018</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Address</div>
+          <div class="contact-item-value">166 E 1275 N, Lehi, UT 84043</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-item-label">Hours</div>
+          <div class="contact-item-value">Open · Closes 6 PM</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⭐</div>
+        <div>
+          <div class="contact-item-label">Rating</div>
+          <div class="contact-item-value">5.0 Stars — Perfect Score on Google</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form">
+    <div class="form-title">Request a Free Estimate</div>
+    <p class="form-sub">We'll get back to you within 1 business day.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="Nathan">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="Smith">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" placeholder="(801) 555-0100">
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="you@email.com">
+    </div>
+
+    <div class="form-group">
+      <label>Service Needed</label>
+      <select>
+        <option value="">Select a service...</option>
+        <option>Sprinkler System Installation</option>
+        <option>Sod Installation</option>
+        <option>Concrete Curbing</option>
+        <option>Garden Beds &amp; Planting</option>
+        <option>Topsoil</option>
+        <option>Full Yard Cleanup</option>
+        <option>Multiple Services / Full Yard Project</option>
+        <option>Other / Not Sure</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tell us about your project</label>
+      <textarea placeholder="Property address, yard size, current condition, what you're looking for, timeline, etc."></textarea>
+    </div>
+
+    <button class="form-submit" onclick="handleSubmit(this)">Send My Request — It's Free →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Exact Landscapes</div>
+  <div class="footer-copy">© 2024 Exact Landscapes · 166 E 1275 N, Lehi, UT 84043</div>
+  <div class="footer-links">
+    <a href="tel:+18016904018">(801) 690-4018</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Hero — fresh green lawn
+  document.getElementById('heroPhoto').style.backgroundImage =
+    "url('https://fairgreensod.com/wp-content/uploads/2021/04/sod-installation-prep.jpg')";
+
+  // Sod panel
+  document.getElementById('photo1').style.backgroundImage =
+    "url('https://basilgreenlawncare.com/wp-content/uploads/2023/06/sod-installation.jpg')";
+
+  // Concrete curbing panel
+  document.getElementById('photo2').style.backgroundImage =
+    "url('https://www.curb-creations.com/wp-content/uploads/2019/08/concrete-curbing-garden-bed.jpg')";
+
+  function handleSubmit(btn) {
+    btn.textContent = '✓ Request Sent! We\'ll be in touch soon.';
+    btn.style.background = 'var(--green-mid)';
+    btn.disabled = true;
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.style.opacity = '1';
+        el.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.service-card, .review-card, .highlight-box, .promise-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
